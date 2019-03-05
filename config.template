@@ -1,0 +1,18 @@
+include "skynet.config"
+root = "$ROOT/"
+--logservice = "customloger"
+thread = 8
+harbor = 0
+standalone = nil
+start = "main"
+luaservice = root .. "?.lua;" .. root .. "service/?.lua;" .. luaservice
+lua_path = root .. "?.lua;" .. root .. "lualib/?.lua;" .. lua_path
+lua_cpath = root .. "luaclib/?.so;" .. lua_cpath
+cpath = root .. "cservice/?.so;" .. cpath
+snax = root .. "service/?.lua;"
+
+logpath = root .. "bin"
+if $DAEMON then
+	logger = root .. "run/skynet.log"
+	daemon = root .. "run/skynet.pid"
+end

@@ -1,0 +1,6 @@
+.vscode/
+bin/
+service/c
+lib/c
+test/
+config
