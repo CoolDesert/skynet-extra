@@ -32,7 +32,7 @@ endef
 $(foreach v, $(CSERVICE), $(eval $(call CSERVICE_TEMP,$(v))))
 
 $(LUA_CLIB_PATH)/ssl.so : src/lua-ssl.c | $(LUA_CLIB_PATH)
-	$(CC) $(CFLAGS) $(SHARED) $^ -o $@ -I$(LUA_INC) -I/usr/local/include -lssl -lcrypto -L/usr/local/lib
+	$(CC) $(CFLAGS) $(SHARED) $^ -o $@ -I$(LUA_INC) -I/usr/local/include -lssl -L/usr/local/lib
 
 clean :
 	rm -rf $(CSERVICE_PATH)/*
