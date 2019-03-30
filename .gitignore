@@ -2,5 +2,5 @@
 bin/
 service/c
 lib/c
-test/
+test/*.pem
 config
