@@ -39,15 +39,15 @@ skynet.start(function()
     --start server
     ws.listen({
         address = "0.0.0.0:8001",
-        ssl_verify = true,
-	    certfile = skynet.getenv("certfile") or "./test/server-cert.pem",
-	    keyfile = skynet.getenv("keyfile") or "./test/server-key.pem"
+        --ssl_verify = true,
+	    --certfile = skynet.getenv("certfile") or "./test/server-cert.pem",
+	    --keyfile = skynet.getenv("keyfile") or "./test/server-key.pem"
     }, function (wsobj)
         skynet.fork(_handleAccepted, wsobj)
     end)
     --start client
     local wsobj = ws.connect({
-        address = "wss://127.0.0.1:8001",
+        address = "ws://127.0.0.1:8001",
     })
     skynet.fork(_handleConnected, wsobj)
 end)

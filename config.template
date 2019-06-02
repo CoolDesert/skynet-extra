@@ -1,15 +1,14 @@
 include "skynet.config"
 root = "$ROOT/"
---logservice = "customloger"
+logservice = "mmlogger"
 thread = 8
 harbor = 0
 standalone = nil
 start = "main"
-luaservice = root .. "?.lua;" .. root .. "service/?.lua;" .. luaservice
-lua_path = root .. "?.lua;" .. root .. "lualib/?.lua;" .. lua_path
-lua_cpath = root .. "luaclib/?.so;" .. lua_cpath
-cpath = root .. "cservice/?.so;" .. cpath
-snax = root .. "service/?.lua;"
+luaservice = root .. "test/?.lua;" .. root .. "service/?.lua;" .. luaservice
+lua_path = root .. "lib/?/init.lua;" .. root .. "lib/?.lua;" .. lua_path
+lua_cpath = root .. "lib/c/?.so;" .. lua_cpath
+cpath = root .. "service/c/?.so;" .. cpath
 
 logpath = root .. "bin"
 if $DAEMON then
