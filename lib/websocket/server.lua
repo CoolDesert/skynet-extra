@@ -167,7 +167,7 @@ function _M.close(self)
     end
 
     if not self.closed then
-        local bytes, err = send_close(self)
+        local bytes, err = _M.send_close(self)
         if not bytes then
             return nil, "failed to send close frame: " .. err
         end

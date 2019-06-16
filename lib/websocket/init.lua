@@ -19,16 +19,18 @@ local function _newserver(ctx, id, opts)
     if opts.ssl_verify then
         local tls_ctx = tls.newtls("server", ctx)
         local init = tls.init_responsefunc(id, tls_ctx)
-    	local close = tls.closefunc(tls_ctx)
+        local close = tls.closefunc(tls_ctx)
         init()
         sock = {
             receive = tls.readfunc(id, tls_ctx),
-            send = tls.writefunc(id, tls_ctx)
+            send = tls.writefunc(id, tls_ctx),
+            close = close
         }
     else
         sock = {
            receive = sockethelper.readfunc(id),
-           send = sockethelper.writefunc(id)
+           send = sockethelper.writefunc(id),
+           close = function () sockethelper.close(id) end
         }
     end
     return server.new(sock)
@@ -39,16 +41,18 @@ local function _newclient(ctx, id, opts)
     if opts.ssl_verify then
         local tls_ctx = tls.newtls("client", ctx)
         local init = tls.init_requestfunc(id, tls_ctx)
-    	local close = tls.closefunc(tls_ctx)
+        local close = tls.closefunc(tls_ctx)
         init()
         sock = {
             receive = tls.readfunc(id, tls_ctx),
-            send = tls.writefunc(id, tls_ctx)
+            send = tls.writefunc(id, tls_ctx),
+            close = close
         }
     else
         sock = {
            receive = sockethelper.readfunc(id),
-           send = sockethelper.writefunc(id)
+           send = sockethelper.writefunc(id),
+           close = function () sockethelper.close(id) end
         }
     end
     return client.new(sock, opts)
