@@ -8,11 +8,18 @@ CFLAGS = -g -O2 -Wall
 
 LUA_INC ?= $(SKYNET_PATH)/3rd/lua
 
+# https : turn on TLS_MODULE to add https support
+
+TLS_MODULE=ltls
+TLS_INC=/usr/local/include
+TLS_LIB=/usr/local/lib
+
+
 LUA_CLIB_PATH ?= lib/c
 CSERVICE_PATH ?= service/c
 
 CSERVICE = mmlogger
-LUA_CLIB = 
+LUA_CLIB = $(TLS_MODULE)
 
 all : \
   $(foreach v, $(CSERVICE), $(CSERVICE_PATH)/$(v).so) \
@@ -30,6 +37,10 @@ define CSERVICE_TEMP
 endef
 
 $(foreach v, $(CSERVICE), $(eval $(call CSERVICE_TEMP,$(v))))
+
+$(LUA_CLIB_PATH)/ltls.so : $(SKYNET_PATH)/lualib-src/ltls.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) -I$(TLS_INC) -L$(TLS_LIB) $^ -o $@ -lssl
+
 
 clean :
 	rm -rf $(CSERVICE_PATH)/*
